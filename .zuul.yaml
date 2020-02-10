@@ -92,6 +92,17 @@
       proposal_project_src: ~/src/github.com/ansible-network/ansible_collections.vyos.vyos
 
 - job:
+    name: propose-network-collections-migration-community-vmware
+    parent: propose-network-collections-migration-base
+    required-projects:
+      - name: github.com/ansible-network/ansible_collections.community.vmware
+    vars:
+      ansible_collection_namespace: community
+      ansible_collection_name: vmware
+      proposal_project_src: ~/src/github.com/ansible-network/ansible_collections.community.vmware
+
+
+- job:
     name: network-collections-migration-base
     parent: unittests
     pre-run: tests/playbooks/pre.yaml
@@ -208,6 +219,15 @@
       - tools/.*
 
 - job:
+    name: network-collections-migration-community-vmware
+    parent: network-collections-migration-base
+    required-projects:
+      - name: github.com/ansible-network/ansible_collections.community.vmware
+    vars:
+      ansible_collection_namespace: community
+      ansible_collection_name: vmware
+
+- job:
     name: build-ansible-minimal
     pre-run:
       - tests/playbooks/pre.yaml
@@ -239,6 +259,7 @@
         - network-collections-migration-cisco-nxos
         - network-collections-migration-junipernetworks-junos
         - network-collections-migration-vyos-vyos
+        - network-collections-migration-community-vmware
     gate:
       queue: network-collections-migration
       jobs:
@@ -250,6 +271,7 @@
         - network-collections-migration-cisco-nxos
         - network-collections-migration-junipernetworks-junos
         - network-collections-migration-vyos-vyos
+        - network-collections-migration-community-vmware
     post:
       jobs:
         - propose-network-collections-migration-ansible-netcommon
@@ -259,6 +281,7 @@
         - propose-network-collections-migration-cisco-nxos
         - propose-network-collections-migration-junipernetworks-junos
         - propose-network-collections-migration-vyos-vyos
+        - propose-network-collections-migration-community-vmware
 
 - project:
     templates:
@@ -272,3 +295,4 @@
         - propose-network-collections-migration-cisco-nxos
         - propose-network-collections-migration-junipernetworks-junos
         - propose-network-collections-migration-vyos-vyos
+        - propose-network-collections-migration-community-vmware
