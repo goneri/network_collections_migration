@@ -61,13 +61,13 @@
             chdir: "{{ zuul.projects[ansible_collection_repo].src_dir }}/tests/integration"
           shell: "{{ ansible_user_dir }}/{{ zuul.projects['github.com/ansible-network/network_collections_migration'].src_dir }}/tools/cleanup_yaml.sh"
 
-    - name: Run black to format collection
-      include_role:
-        name: tox
-      vars:
-        tox_envlist: black
-        tox_install_siblings: false
-        zuul_work_dir: "{{ zuul.projects[ansible_collection_repo].src_dir }}"
+        - name: Run black to format collection
+          include_role:
+            name: tox
+          vars:
+            tox_envlist: black
+            tox_install_siblings: false
+            zuul_work_dir: "{{ zuul.projects[ansible_collection_repo].src_dir }}"
 
     - name: Prepare to commit files
       args:
